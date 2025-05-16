@@ -144,7 +144,7 @@ int main() {
 
 	// iterate over the foward_list using iterator
 
-	for (auto it = l4.begin(), end = l4.end(); it != end; it++) {
+	for (auto it = l4.begin(), end = wl4.end(); it != end; it++) {
 		cout << *it << " ";
 	}
 
