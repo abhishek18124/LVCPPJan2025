@@ -28,7 +28,7 @@ int main() {
 	s.insert(3);
 	s.insert(2);
 	s.insert(1);
-	s.insert(1); // ignored, why ? 1 is already is present
+	s.insert(1); // not ignored, why ? since we are working with a multiset which allows duplicates
 
 	cout << "size : " << s.size() << endl; // 5
 
