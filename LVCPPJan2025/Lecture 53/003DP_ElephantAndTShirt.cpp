@@ -155,7 +155,6 @@ int main() {
 
 		cout << fTopdown(1, 0, inp, n, dp) << endl;
 
-
 	}
 
 	return 0;
