@@ -25,7 +25,7 @@ output :
 
 #include<iostream>
 #include<vector>
-#include<set>
+#include<queue>
 
 using namespace std;
 
@@ -51,23 +51,23 @@ int main() {
 
 	vector<bool> ex(n, false);
 
-	set<pair<int, int>> minHeap;
-	for (int i = 0; i < n; i++) {
-		minHeap.insert({distMap[i], i});
-	}
+	priority_queue<pair<int, int>,
+	               vector<pair<int, int>>,
+	               greater<pair<int, int>>> minHeap;
 
-	// time : O(VlogV + ElogV) ~ O(V+E)logV // each relaxation takes logV time // at max we can do E relaxation // each edge can be relaxed atmost once
-	// space: O(V)
+	minHeap.push({distMap[src], src});
 
 	while (!minHeap.empty()) {
 
-		// pair<int, int> p = *minHeap.begin();
-		// int dist = p.first;
+		// pair<int, int> p = minHeap.top();
+		// int dis_cur = p.first;
 		// int cur = p.second;
-		// minHeap.erase(minHeap.begin());
+		// minHeap.pop();
 
-		auto [dist, cur] = *minHeap.begin();
-		minHeap.erase(minHeap.begin());
+		auto [dis_cur, cur] = minHeap.top();
+		minHeap.pop();
+
+		if (dis_cur > distMap[cur]) continue; // dis_cur is outdated
 
 		// for(pair<int, int> pp : adj[cur]) {
 		// 	int ngb = pp.first;
@@ -79,13 +79,11 @@ int main() {
 			if (!ex[ngb] and distMap[ngb] > distMap[cur] + edgeWgt) {
 
 				// relax the edge b/w cur and ngb
-
-				auto it = minHeap.find({distMap[ngb], ngb}); // logV
-				minHeap.erase(it); // logV
-				distMap[ngb] = distMap[cur] + edgeWgt; // const
-				minHeap.insert({distMap[ngb], ngb}); // logV
+				distMap[ngb] = distMap[cur] + edgeWgt;
+				minHeap.push({distMap[ngb], ngb});
 
 			}
+
 		}
 
 		ex[cur] = true;
